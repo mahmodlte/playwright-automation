@@ -16,3 +16,21 @@ test("Adding elements to the website", async ({ page }) => {
   await page.getByRole("button", { name: "Add Element" }).click();
   await expect(page.getByRole("button", { name: "Delete" })).toBeVisible();
 });
+
+test("Checking and unchacking the checkboxes", async ({ page }) => {
+  // Navigate to the website
+
+  await page.goto("https://the-internet.herokuapp.com/");
+
+  await page.getByRole("link", { name: "Checkboxes" }).click();
+
+  const checkboxes = await page.getByRole("checkbox");
+
+  await expect(checkboxes).toHaveCount(2);
+
+  await checkboxes.nth(0).check();
+  await expect(checkboxes.nth(0)).toBeChecked();
+
+  await checkboxes.nth(1).uncheck();
+  await expect(checkboxes.nth(1)).not.toBeChecked();
+});
