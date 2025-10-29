@@ -34,3 +34,14 @@ test("Checking and unchacking the checkboxes", async ({ page }) => {
   await checkboxes.nth(1).uncheck();
   await expect(checkboxes.nth(1)).not.toBeChecked();
 });
+
+test("Selecting from an options menu", async ({ page }) => {
+  await page.goto("https://the-internet.herokuapp.com/");
+  await page.getByRole("link", { name: "Dropdown" }).click();
+  await page.selectOption("select#dropdown", "Option 1");
+  const option1 = await page.locator("select#dropdown").inputValue();
+  expect(option1).toBe("1");
+  await page.selectOption("select#dropdown", "Option 2");
+  const option2 = await page.locator("select#dropdown").inputValue();
+  expect(option2).toBe("2");
+});
